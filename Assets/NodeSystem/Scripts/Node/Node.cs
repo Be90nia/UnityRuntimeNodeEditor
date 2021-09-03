@@ -23,8 +23,16 @@ namespace RuntimeNodeEditor
         public GameObject body;
 
         private NodeDraggablePanel _dragPanel;
+        [SerializeField]
         private NodeType _nodeType;
+        private NodeType _initNodeType;
         private RectTransform _panelRectTransform;
+
+        internal NodeType NodeType
+        {
+            get => _nodeType;
+            set => _nodeType = value;
+        }
 
         public void Init(Vector2 pos, string id, string path)
         {
@@ -92,6 +100,7 @@ namespace RuntimeNodeEditor
         public void SetType(NodeType type)
         {
             _nodeType = type;
+            _initNodeType = type;
         }
 
         public void SetPosition(Vector2 pos)
@@ -106,6 +115,11 @@ namespace RuntimeNodeEditor
         public void SetAsFirstSibling()
         {
             _panelRectTransform.SetAsFirstSibling();
+        }
+
+        public virtual void Rest()
+        {
+            _nodeType = _initNodeType;
         }
     }
 }

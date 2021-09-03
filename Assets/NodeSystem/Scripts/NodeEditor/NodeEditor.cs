@@ -81,12 +81,13 @@ namespace RuntimeNodeEditor
         private void DisplayGraphContextMenu()
         {
             _graphCtx = new ContextMenuBuilder()
-                        .Add("nodes/float", CreateFloatNode)
-                        .Add("nodes/math op",       CreateMatOpNode)
-                        .Add("graph/load",          LoadGraph)
-                        .Add("graph/save",          SaveGraph)
+                .Add("nodes/int", CreateIntNode)
+                .Add("nodes/float", CreateFloatNode)
+                .Add("nodes/math op", CreateMatOpNode)
+                .Add("graph/load", LoadGraph)
+                .Add("graph/save", SaveGraph)
 
-                        .Build();
+                .Build();
 
             _contextMenu.Clear();
             _contextMenu.Show(_graphCtx, Utility.GetCtxMenuPointerPosition());
@@ -124,6 +125,13 @@ namespace RuntimeNodeEditor
         {
             var pos = Utility.GetLocalPointIn(nodeContainer, Input.mousePosition);
             graph.Create("Prefabs/Nodes/FloatNode", pos);
+            CloseContextMenu();
+        }
+
+        private void CreateIntNode()
+        {
+            var pos = Utility.GetLocalPointIn(nodeContainer, Input.mousePosition);
+            graph.Create("Prefabs/Nodes/IntNode", pos);
             CloseContextMenu();
         }
 

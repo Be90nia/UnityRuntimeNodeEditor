@@ -58,19 +58,19 @@ namespace RuntimeNodeEditor
 
         public void Connect(SocketInput input, SocketOutput output)
         {
+            if (input.GetNodeType() == NodeType.Object)
+                input.SetNodeType(output.GetNodeType());
             var connection = new Connection()
             {
                 connId = CreateId,
                 input = input,
                 output = output
             };
-
             input.Connect(connection);
             output.Connect(connection);
 
             connections.Add(connection);
             input.parentNode.Connect(input, output);
-
             drawer.Add(connection.connId, output.handle, input.handle);
         }
 
@@ -81,7 +81,7 @@ namespace RuntimeNodeEditor
 
             conn.input.Disconnect();
             conn.output.Disconnect();
-
+            conn.output.Rest();
             connections.Remove(conn);
         }
 
@@ -249,17 +249,27 @@ namespace RuntimeNodeEditor
 
             if (target != null)
             {
-                //  check if input allows multiple connection
-                if (target.HasConnection())
+                if (target.parentNode.Equals(_currentDraggingSocket.parentNode))
                 {
-                    //  disconnect old connection
-                    if (target.connectionType != ConnectionType.Multiple)
-                    {
-                        Disconnect(target.connection);
-                    }
+                    drawer.CancelDrag();
+                    return;
                 }
 
-                Connect(target, _currentDraggingSocket);
+                if (target.GetNodeType() == NodeType.Object ||
+                    target.GetNodeType() == _currentDraggingSocket.GetNodeType())
+                {
+                    //  check if input allows multiple connection
+                    if (target.HasConnection())
+                    {
+                        //  disconnect old connection
+                        if (target.connectionType != ConnectionType.Multiple)
+                        {
+                            Disconnect(target.connection);
+                        }
+                    }
+
+                    Connect(target, _currentDraggingSocket);
+                }
             }
 
             _currentDraggingSocket = null;

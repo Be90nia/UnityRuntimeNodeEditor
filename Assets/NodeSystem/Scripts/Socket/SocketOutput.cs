@@ -7,7 +7,6 @@ namespace RuntimeNodeEditor
     public class SocketOutput : Socket, IOutput, IPointerClickHandler, IDragHandler, IEndDragHandler
     {
         private object _value;
-
         public void SetValue(object value)
         {
             if (_value != value)
@@ -18,6 +17,16 @@ namespace RuntimeNodeEditor
         }
 
         public event Action ValueUpdated;
+
+        public NodeType GetNodeType()
+        {
+            return parentNode.NodeType;
+        }
+
+        public void SetNodeType(NodeType nodeType)
+        {
+            parentNode.NodeType = nodeType;
+        }
 
         public T GetValue<T>()
         {
@@ -39,6 +48,7 @@ namespace RuntimeNodeEditor
             foreach (var item in eventData.hovered)
             {
                 var input = item.GetComponent<SocketInput>();
+                
                 if (input != null)
                 {
                     SignalSystem.InvokeOutputSocketDragDropTo(input);
@@ -47,6 +57,11 @@ namespace RuntimeNodeEditor
             }
 
             SignalSystem.InvokeOutputSocketDragDropTo(null);
+        }
+
+        public void Rest()
+        {
+            parentNode.Rest();
         }
     }
 }

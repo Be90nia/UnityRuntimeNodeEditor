@@ -1,11 +1,11 @@
-using UnityEngine;
-using UnityEngine.UI;
+using System.Collections;
+using System.Collections.Generic;
 using TMPro;
-using System;
+using UnityEngine;
 
 namespace RuntimeNodeEditor
 {
-    public class FloatNode : Node
+    public class IntNode : Node
     {
         public TMP_InputField valueField;
         public SocketOutput outputSocket;
@@ -15,8 +15,8 @@ namespace RuntimeNodeEditor
             Register(outputSocket);
 
 
-            SetType(NodeType.Float);
-            SetHeader("float");
+            SetType(NodeType.Int);
+            SetHeader("Int");
 
             valueField.text = "0";
             HandleInputValue(valueField.text);
@@ -32,18 +32,18 @@ namespace RuntimeNodeEditor
                 value = "0";
                 valueField.SetTextWithoutNotify(value);
             }
-            float floatValue = float.Parse(value);
-            outputSocket.SetValue(floatValue);
+            int intValue = int.Parse(value);
+            outputSocket.SetValue(intValue);
         }
 
         public override void OnSerialize(Serializer serializer)
         {
-            serializer.Add("floatValue", valueField.text);
+            serializer.Add("IntValue", valueField.text);
         }
 
         public override void OnDeserialize(Serializer serializer)
         {
-            var value = serializer.Get("floatValue");
+            var value = serializer.Get("IntValue");
             valueField.SetTextWithoutNotify(value);
 
             HandleInputValue(value);

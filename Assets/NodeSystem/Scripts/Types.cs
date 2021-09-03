@@ -3,6 +3,8 @@ namespace RuntimeNodeEditor
     public enum NodeType
     {
         Float,
+        Int,
+        Object,
         Group
     }
 
