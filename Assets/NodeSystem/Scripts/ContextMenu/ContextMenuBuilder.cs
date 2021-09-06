@@ -98,10 +98,5 @@ namespace RuntimeNodeEditor
             this.name = name;
             children = new List<ContextMenuData>();
         }
-
-
-
-
-
     }
 }

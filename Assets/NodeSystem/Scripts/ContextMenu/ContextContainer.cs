@@ -7,7 +7,7 @@ namespace RuntimeNodeEditor
 {
     public class ContextContainer : MonoBehaviour
     {
-        public Transform content;
+        public UnityEngine.Transform content;
         public int depthLevel;
 
         private RectTransform _rect;

@@ -11,8 +11,8 @@ namespace RuntimeNodeEditor
     {
         public TMP_Text nameText;
         public Button button;
-        public Transform subContextIcon;
-        public Transform subContextTransform;
+        public UnityEngine.Transform subContextIcon;
+        public UnityEngine.Transform subContextTransform;
 
         public void Init(ContextMenuData node)
         {

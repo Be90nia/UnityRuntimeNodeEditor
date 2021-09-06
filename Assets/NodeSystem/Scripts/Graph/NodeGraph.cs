@@ -78,11 +78,10 @@ namespace RuntimeNodeEditor
         {
             drawer.Remove(conn.connId);
             conn.input.parentNode.Disconnect(conn.input, conn.output);
-
             conn.input.Disconnect();
             conn.output.Disconnect();
-            conn.output.Rest();
             connections.Remove(conn);
+            conn.input.Rest();  
         }
 
         public void Disconnect(IConnection conn)
@@ -234,6 +233,7 @@ namespace RuntimeNodeEditor
 
                 return;
             }
+
             //  if sockets connected already
             //  do nothing
             if (_currentDraggingSocket.HasConnection() && target.HasConnection())
@@ -255,8 +255,10 @@ namespace RuntimeNodeEditor
                     return;
                 }
 
-                if (target.GetNodeType() == NodeType.Object ||
-                    target.GetNodeType() == _currentDraggingSocket.GetNodeType())
+                if ((target.GetNodeType() == NodeType.Object ||
+                     target.GetNodeType() == _currentDraggingSocket.GetNodeType() ||
+                     (target.GetNodeType() == NodeType.Class &&
+                      target.GetInputType() == _currentDraggingSocket.GetOutpuType())))
                 {
                     //  check if input allows multiple connection
                     if (target.HasConnection())

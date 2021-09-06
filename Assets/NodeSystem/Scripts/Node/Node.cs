@@ -14,7 +14,7 @@ namespace RuntimeNodeEditor
 
         public List<SocketOutput> outputs;
         public List<SocketInput> inputs;
-        public List<SocketOutput> connectedOutputs;
+        public Dictionary<string, List<SocketOutput>> connectedOutputs;
 
         public event Action<SocketInput, IOutput> OnConnectionEvent;
         public event Action<SocketInput, IOutput> OnDisconnectEvent;
@@ -24,14 +24,18 @@ namespace RuntimeNodeEditor
 
         private NodeDraggablePanel _dragPanel;
         [SerializeField]
-        private NodeType _nodeType;
+        protected NodeType _nodeType;
         private NodeType _initNodeType;
         private RectTransform _panelRectTransform;
 
-        internal NodeType NodeType
+        internal NodeType GetNodeType()
         {
-            get => _nodeType;
-            set => _nodeType = value;
+            return _nodeType;
+        }
+
+        public virtual void SetNodType(NodeType nodeType)
+        {
+            _nodeType = nodeType;
         }
 
         public void Init(Vector2 pos, string id, string path)
@@ -48,7 +52,8 @@ namespace RuntimeNodeEditor
             outputs = new List<SocketOutput>();
             inputs = new List<SocketInput>();
 
-            connectedOutputs = new List<SocketOutput>();
+            connectedOutputs = new Dictionary<string, List<SocketOutput>>();
+
         }
 
         public virtual void Setup() { }
@@ -72,13 +77,29 @@ namespace RuntimeNodeEditor
 
         public void Connect(SocketInput input, SocketOutput output)
         {
-            connectedOutputs.Add(output);
+            if (!connectedOutputs.ContainsKey(input.socketId))
+            {
+                List<SocketOutput> tempOutput = new List<SocketOutput>();
+                tempOutput.Add(output);
+                connectedOutputs.Add(input.socketId, tempOutput);
+            }
+            else
+            {
+                if (!connectedOutputs[input.socketId].Contains(output))
+                    connectedOutputs[input.socketId].Add(output);
+            }
+
             OnConnectionEvent?.Invoke(input, output);
         }
 
         public void Disconnect(SocketInput input, SocketOutput output)
         {
-            connectedOutputs.Remove(output);
+            if (connectedOutputs.ContainsKey(input.socketId) &&
+                connectedOutputs[input.socketId].Contains(output))
+            {
+                connectedOutputs[input.socketId].Remove(output);
+            }
+
             OnDisconnectEvent?.Invoke(input, output);
         }
 
@@ -120,6 +141,12 @@ namespace RuntimeNodeEditor
         public virtual void Rest()
         {
             _nodeType = _initNodeType;
+        }
+
+        public virtual void ChangeNodeType(NodeType nodeType)
+        {
+            if (_nodeType == NodeType.Object && nodeType != NodeType.Object && nodeType != _nodeType)
+                SetNodType(nodeType);
         }
     }
 }

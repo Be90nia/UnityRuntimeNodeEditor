@@ -4,7 +4,10 @@ namespace RuntimeNodeEditor
     {
         Float,
         Int,
+        Vector3,
         Object,
+        Class,
+        Transform,
         Group
     }
 

@@ -83,7 +83,9 @@ namespace RuntimeNodeEditor
             _graphCtx = new ContextMenuBuilder()
                 .Add("nodes/int", CreateIntNode)
                 .Add("nodes/float", CreateFloatNode)
-                .Add("nodes/math op", CreateMatOpNode)
+                .Add("nodes/vector3 ", CreateVector3Node)
+                .Add("nodes/transform",CreateTransformNode)
+                .Add("nodes/math op",CreateMatOpNode)
                 .Add("graph/load", LoadGraph)
                 .Add("graph/save", SaveGraph)
 
@@ -132,6 +134,19 @@ namespace RuntimeNodeEditor
         {
             var pos = Utility.GetLocalPointIn(nodeContainer, Input.mousePosition);
             graph.Create("Prefabs/Nodes/IntNode", pos);
+            CloseContextMenu();
+        }
+        private void CreateVector3Node()
+        {
+            var pos = Utility.GetLocalPointIn(nodeContainer, Input.mousePosition);
+            graph.Create("Prefabs/Nodes/Vector3Node", pos);
+            CloseContextMenu();
+        }
+
+        private void CreateTransformNode()
+        {
+            var pos = Utility.GetLocalPointIn(nodeContainer, Input.mousePosition);
+            graph.Create("Prefabs/Nodes/TransformNode", pos);
             CloseContextMenu();
         }
 

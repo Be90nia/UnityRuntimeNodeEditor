@@ -19,7 +19,6 @@ namespace RuntimeNodeEditor
             Register(outputSocket);
             Register(inputSocket);
 
-
             SetType(NodeType.Object);
             SetHeader("operation");
             outputSocket.SetValue(0f);
@@ -41,7 +40,6 @@ namespace RuntimeNodeEditor
         public void OnConnection(SocketInput input, IOutput output)
         {
             output.ValueUpdated += OnConnectedValueUpdated;
-
             OnConnectedValueUpdated();
         }
 
@@ -69,21 +67,32 @@ namespace RuntimeNodeEditor
 
         private void OnConnectedValueUpdated()
         {
-            List<object> incomingValues = new List<object>();
-            foreach (var c in connectedOutputs)
+            if (connectedOutputs[inputSocket.socketId].Count != 0)
             {
-                incomingValues.Add(c.GetValue<object>());
+                List<object> incomingValues = new List<object>();
+                foreach (var c in connectedOutputs[inputSocket.socketId])
+                {
+                    ChangeNodeType(c.GetOutpuType());
+                    incomingValues.Add(c.GetValue<object>());
+                }
+                switch (GetNodeType())
+                {
+                    case NodeType.Float:
+                        ValueUpdate<float>(incomingValues);
+                        break;
+                    case NodeType.Int:
+                        ValueUpdate<int>(incomingValues);
+                        break;
+                    case NodeType.Vector3:
+                        ValueUpdate<Vector3>(incomingValues);
+                        break;
+                }
             }
-
-            switch (NodeType)
+            else
             {
-                case NodeType.Float:
-                    ValueUpdate<float>(incomingValues);
-                    break;
-                case NodeType.Int:
-                    ValueUpdate<int>(incomingValues);
-                    break;
+                Display("result");
             }
+            
         }
 
         private void ValueUpdate<T>(List<object> values)
@@ -109,40 +118,56 @@ namespace RuntimeNodeEditor
                         return values.Aggregate((x, y) =>
                         {
                             object temp = null;
-                            if (NodeType == NodeType.Float)
+                            if (GetNodeType() == NodeType.Float)
                                 temp = (float)x * (float)y;
-                            if (NodeType == NodeType.Int)
+                            if (GetNodeType() == NodeType.Int)
                                 temp = (int)x * (int)y;
+                            if (GetNodeType() == NodeType.Vector3)
+                            {
+                                var tempX = (Vector3) x;
+                                var tempY = (Vector3)y;
+                                temp = new Vector3(tempX.x*tempY.x, tempX.y * tempY.y, tempX.z * tempY.z);
+                            }
                             return temp;
                         });
                     case MathOperations.Divide:
                         return values.Aggregate((x, y) =>
                         {
                             object temp = null;
-                            if (NodeType == NodeType.Float)
+                            if (GetNodeType() == NodeType.Float)
                                 temp = (float)x / (float)y;
-                            if (NodeType == NodeType.Int)
+                            if (GetNodeType() == NodeType.Int)
                                 temp = (int)x / (int)y;
+                            if (GetNodeType() == NodeType.Vector3)
+                            {
+                                var tempX = (Vector3)x;
+                                var tempY = (Vector3)y;
+                                temp = new Vector3(tempX.x / tempY.x, tempX.y / tempY.y, tempX.z / tempY.z);
+                            }
                             return temp;
                         });
                     case MathOperations.Add:
                         return values.Aggregate((x, y) =>
                         {
                             object temp = null;
-                            if (NodeType == NodeType.Float)
+                            if (GetNodeType() == NodeType.Float)
                                 temp = (float)x + (float)y;
-                            if (NodeType == NodeType.Int)
+                            if (GetNodeType() == NodeType.Int)
                                 temp = (int)x + (int)y;
+                            if (GetNodeType() == NodeType.Vector3)
+                                temp = (Vector3) x + (Vector3) y;
                             return temp;
                         });
                     case MathOperations.Substract:
                         return values.Aggregate((x, y) =>
                         {
                             object temp = null;
-                            if (NodeType == NodeType.Float)
+                            if (GetNodeType() == NodeType.Float)
                                 temp = (float)x - (float)y;
-                            if (NodeType == NodeType.Int)
+                            if (GetNodeType() == NodeType.Int)
                                 temp = (int)x - (int)y;
+                            if (GetNodeType() == NodeType.Vector3)
+                                temp = (Vector3)x - (Vector3)y;
                             return temp;
                         });
                     default:
@@ -153,6 +178,17 @@ namespace RuntimeNodeEditor
             {
                 return 0;
             }
+        }
+        public override void SetNodType(NodeType nodeType)
+        {
+            base.SetNodType(nodeType);
+            outputSocket.SetOutputType(_nodeType);
+        }
+
+        public override void Rest()
+        {
+            base.Rest();
+            outputSocket.SetOutputType(_nodeType);
         }
     }
 }

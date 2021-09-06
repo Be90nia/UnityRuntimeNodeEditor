@@ -356,9 +356,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   outputs: []
   inputs: []
-  connectedOutputs: []
   headerText: {fileID: 4050287918490397133}
   body: {fileID: 6290086045451085351}
+  _nodeType: 0
   valueField: {fileID: 8191792925013298783}
   outputSocket: {fileID: 6278127011514429466}
 --- !u!1 &8966638480194106887
@@ -581,6 +581,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6290086046137204442}
     m_Modifications:
+    - target: {fileID: 3783978722233111050, guid: d5b424b52c9f14126954e1025915a828,
+        type: 3}
+      propertyPath: _outpuType
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3783978722233111050, guid: d5b424b52c9f14126954e1025915a828,
         type: 3}
       propertyPath: connectionType

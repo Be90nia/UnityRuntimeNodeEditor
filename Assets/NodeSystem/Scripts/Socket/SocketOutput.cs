@@ -6,7 +6,21 @@ namespace RuntimeNodeEditor
 {
     public class SocketOutput : Socket, IOutput, IPointerClickHandler, IDragHandler, IEndDragHandler
     {
+        [SerializeField]
+        private NodeType _outpuType = NodeType.Object;
+
         private object _value;
+
+        public void SetOutputType(NodeType nodeType)
+        {
+            _outpuType = nodeType;
+        }
+
+        public NodeType GetOutpuType()
+        {
+            return _outpuType;
+        }
+
         public void SetValue(object value)
         {
             if (_value != value)
@@ -20,12 +34,12 @@ namespace RuntimeNodeEditor
 
         public NodeType GetNodeType()
         {
-            return parentNode.NodeType;
+            return parentNode.GetNodeType();
         }
 
         public void SetNodeType(NodeType nodeType)
         {
-            parentNode.NodeType = nodeType;
+            parentNode.SetNodType(nodeType);
         }
 
         public T GetValue<T>()
@@ -57,11 +71,6 @@ namespace RuntimeNodeEditor
             }
 
             SignalSystem.InvokeOutputSocketDragDropTo(null);
-        }
-
-        public void Rest()
-        {
-            parentNode.Rest();
         }
     }
 }

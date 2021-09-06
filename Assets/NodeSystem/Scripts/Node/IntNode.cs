@@ -8,7 +8,7 @@ namespace RuntimeNodeEditor
     public class IntNode : Node
     {
         public TMP_InputField valueField;
-        public SocketOutput outputSocket;
+        public SocketOutput outputSocket;   
 
         public override void Setup()
         {
