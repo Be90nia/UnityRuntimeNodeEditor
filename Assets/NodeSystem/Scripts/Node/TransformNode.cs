@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace RuntimeNodeEditor
 {
@@ -24,10 +25,15 @@ namespace RuntimeNodeEditor
             SetHeader("transform");
 
             outputSocket.SetValue(new RuntimeNodeEditor.TransformRuntimeData());
-            
+            outputSocket.SetIsCreateNewValue(false);
             OnConnectionEvent += OnConnection;
             OnDisconnectEvent += OnDisconnect;
             OnConnectedValueUpdated();
+
+        }
+
+        private void Update()
+        {
 
         }
 
@@ -59,17 +65,17 @@ namespace RuntimeNodeEditor
         {
             output.ValueUpdated -= OnConnectedValueUpdated;
             OnConnectedValueUpdated();
-
         }
 
         private void OnConnectedValueUpdated()
         {
-            ValueUpdate(inputSocketPosition.socketId, resultTextPosition, outputSocket.GetValue<TransformRuntimeData>().position);
-            ValueUpdate(inputSocketRotation.socketId, resultTextRotation, outputSocket.GetValue<TransformRuntimeData>().rotation);
-            ValueUpdate(inputSocketScale.socketId, resultTextScale, outputSocket.GetValue<TransformRuntimeData>().scale);
+            ValueUpdate(inputSocketPosition.socketId, resultTextPosition,ref outputSocket.GetValue<TransformRuntimeData>().position);
+            ValueUpdate(inputSocketRotation.socketId, resultTextRotation,ref outputSocket.GetValue<TransformRuntimeData>().rotation);
+            ValueUpdate(inputSocketScale.socketId, resultTextScale,ref outputSocket.GetValue<TransformRuntimeData>().scale);
+            outputSocket.SetValue(outputSocket.GetValue<TransformRuntimeData>());
         }
 
-        private void ValueUpdate(string id, TMP_Text text, Vector3 value)
+        private void ValueUpdate(string id, TMP_Text text,ref Vector3 value)
         {
             if (connectedOutputs.ContainsKey(id)
                 && connectedOutputs[id].Count != 0)
@@ -79,8 +85,7 @@ namespace RuntimeNodeEditor
                 {
                     temp += output.GetValue<Vector3>();
                 }
-
-                value += temp;
+                value = temp;
             }
 
             Display(text, value.ToString());

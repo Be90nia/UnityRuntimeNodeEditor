@@ -148,5 +148,10 @@ namespace RuntimeNodeEditor
             if (_nodeType == NodeType.Object && nodeType != NodeType.Object && nodeType != _nodeType)
                 SetNodType(nodeType);
         }
+
+        public virtual void DeleteNode()
+        {
+
+        }
     }
 }

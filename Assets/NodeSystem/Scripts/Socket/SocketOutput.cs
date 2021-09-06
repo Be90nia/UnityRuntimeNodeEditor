@@ -8,8 +8,14 @@ namespace RuntimeNodeEditor
     {
         [SerializeField]
         private NodeType _outpuType = NodeType.Object;
-
+        [SerializeField]
+        private bool _isCreateNewValue = true;
         private object _value;
+
+        public void SetIsCreateNewValue(bool isNewValue)
+        {
+            _isCreateNewValue = isNewValue;
+        }
 
         public void SetOutputType(NodeType nodeType)
         {
@@ -23,7 +29,12 @@ namespace RuntimeNodeEditor
 
         public void SetValue(object value)
         {
-            if (_value != value)
+            if (_value != value && _isCreateNewValue)
+            {
+                _value = value;
+                ValueUpdated?.Invoke();
+            }
+            else if(!_isCreateNewValue)
             {
                 _value = value;
                 ValueUpdated?.Invoke();

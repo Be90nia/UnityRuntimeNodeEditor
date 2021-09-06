@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,8 +8,8 @@ namespace RuntimeNodeEditor
     {
         public TMP_Text nameText;
         public Button button;
-        public UnityEngine.Transform subContextIcon;
-        public UnityEngine.Transform subContextTransform;
+        public Transform subContextIcon;
+        public Transform subContextTransform;
 
         public void Init(ContextMenuData node)
         {

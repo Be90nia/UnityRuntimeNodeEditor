@@ -62,7 +62,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8910129825122914749}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -103,9 +103,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b42aaa159c26144bfa09ef02a9e23840, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  socketId: 
   handle: {fileID: 3438620103077454479}
   connectionType: 1
   parentNode: {fileID: 0}
+  _outpuType: 5
+  _isNewValue: 0
 --- !u!222 &8737185130096593380
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -129,6 +132,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -203,6 +207,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.8784314, g: 0.77254903, b: 0.1843137, a: 1}
   m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:

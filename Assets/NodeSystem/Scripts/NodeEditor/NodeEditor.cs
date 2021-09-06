@@ -86,6 +86,7 @@ namespace RuntimeNodeEditor
                 .Add("nodes/vector3 ", CreateVector3Node)
                 .Add("nodes/transform",CreateTransformNode)
                 .Add("nodes/math op",CreateMatOpNode)
+                .Add("models/Cube", CreateCubeNode)
                 .Add("graph/load", LoadGraph)
                 .Add("graph/save", SaveGraph)
 
@@ -164,8 +165,16 @@ namespace RuntimeNodeEditor
             CloseContextMenu();
         }
 
+        private void CreateCubeNode()
+        {
+            var pos = Utility.GetLocalPointIn(nodeContainer, Input.mousePosition);
+            graph.Create("Prefabs/Nodes/CubeNode", pos);
+            CloseContextMenu();
+        }
+
         private void DeleteNode(Node node)
         {
+            node.DeleteNode();
             CloseContextMenu();
             graph.Delete(node);
         }
