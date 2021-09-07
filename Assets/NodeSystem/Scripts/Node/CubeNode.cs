@@ -24,7 +24,7 @@ namespace RuntimeNodeEditor
             SetType(NodeType.Class);
             SetHeader("Cube");
             CreateCube(Vector3.zero, Quaternion.identity, Vector3.one);
-
+            outputSocket.SetValue(Model);
             OnConnectionEvent += OnConnection;
             OnDisconnectEvent += OnDisconnect;
             OnConnectedValueUpdated();

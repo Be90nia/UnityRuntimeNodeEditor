@@ -267,7 +267,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   outputs: []
   inputs: []
-  connectedOutputs: []
   headerText: {fileID: 4050287918490397133}
   body: {fileID: 6290086045451085351}
   _nodeType: 2

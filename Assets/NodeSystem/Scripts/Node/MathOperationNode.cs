@@ -22,7 +22,7 @@ namespace RuntimeNodeEditor
             SetType(NodeType.Object);
             SetHeader("operation");
             outputSocket.SetValue(0f);
-
+            
             dropdown.AddOptions(new List<TMP_Dropdown.OptionData>()
             {
                 new TMP_Dropdown.OptionData(MathOperations.Multiply.ToString()),

@@ -12,7 +12,6 @@ namespace RuntimeNodeEditor
 
         //  scene references
         public BezierCurveDrawer drawer;
-
         //  cache
         private SocketOutput _currentDraggingSocket;
         private Vector2 _pointerOffset;
@@ -20,6 +19,7 @@ namespace RuntimeNodeEditor
         private RectTransform _nodeContainer;
         private RectTransform _graphContainer;
 
+        private bool _isPlay = false;
         public RectTransform GraphContainer => _graphContainer;
 
 
@@ -200,6 +200,23 @@ namespace RuntimeNodeEditor
         public void OnUpdate()
         {
             drawer.UpdateDraw();
+            if (_isPlay)
+            {
+                foreach (var node in nodes)
+                    node.OnUpdate();
+            }
+        }
+
+        public void Play()
+        {
+            _isPlay = true;
+            foreach (var node in nodes)
+                node.Play();
+        }
+
+        public void Puse()
+        {
+            _isPlay = false;
         }
 
         //  event handlers

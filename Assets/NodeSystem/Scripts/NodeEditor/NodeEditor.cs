@@ -18,6 +18,7 @@ namespace RuntimeNodeEditor
         private ContextMenu _contextMenu;
         private ContextMenuData _graphCtx;
         private ContextMenuData _nodeCtx;
+        private bool _isPlay = false;
 
         private void Start()
         {
@@ -86,7 +87,9 @@ namespace RuntimeNodeEditor
                 .Add("nodes/vector3 ", CreateVector3Node)
                 .Add("nodes/transform",CreateTransformNode)
                 .Add("nodes/math op",CreateMatOpNode)
-                .Add("models/Cube", CreateCubeNode)
+                .Add("nodes/debug",CreateDebugNode)
+                .Add("nodes/timer",CreateTimerNode)
+                .Add("models/cube", CreateCubeNode)
                 .Add("graph/load", LoadGraph)
                 .Add("graph/save", SaveGraph)
 
@@ -172,6 +175,20 @@ namespace RuntimeNodeEditor
             CloseContextMenu();
         }
 
+        private void CreateTimerNode()
+        {
+            var pos = Utility.GetLocalPointIn(nodeContainer, Input.mousePosition);
+            graph.Create("Prefabs/Nodes/TimerNode", pos);
+            CloseContextMenu();
+        }
+
+        private void CreateDebugNode()
+        {
+            var pos = Utility.GetLocalPointIn(nodeContainer, Input.mousePosition);
+            graph.Create("Prefabs/Nodes/TestTimerNode", pos);
+            CloseContextMenu();
+        }
+
         private void DeleteNode(Node node)
         {
             node.DeleteNode();
@@ -202,6 +219,20 @@ namespace RuntimeNodeEditor
             CloseContextMenu();
             graph.Clear();
             graph.Load(Application.dataPath + "/NodeSystem/Resources/Graphs/graph.json");
+        }
+
+        public void ClickPlayButton()
+        {
+            if (_isPlay)
+            {
+                _isPlay = false;
+                graph.Puse();
+            }
+            else
+            {
+                _isPlay = true;
+                graph.Play();
+            }
         }
     }
 }

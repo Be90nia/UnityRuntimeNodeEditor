@@ -153,5 +153,14 @@ namespace RuntimeNodeEditor
         {
 
         }
+
+        public virtual void OnUpdate()
+        {
+
+        }
+
+        public virtual void Play()
+        {
+        }
     }
 }

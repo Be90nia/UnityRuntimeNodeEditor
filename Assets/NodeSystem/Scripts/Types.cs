@@ -8,6 +8,8 @@ namespace RuntimeNodeEditor
         Object,
         Class,
         Transform,
+        GameObject,
+        ITimer,
         Group
     }
 
