@@ -19,7 +19,6 @@ namespace RuntimeNodeEditor
         private RectTransform _nodeContainer;
         private RectTransform _graphContainer;
 
-        private bool _isPlay = false;
         public RectTransform GraphContainer => _graphContainer;
 
 
@@ -200,24 +199,10 @@ namespace RuntimeNodeEditor
         public void OnUpdate()
         {
             drawer.UpdateDraw();
-            if (_isPlay)
-            {
-                foreach (var node in nodes)
-                    node.OnUpdate();
-            }
-        }
-
-        public void Play()
-        {
-            _isPlay = true;
             foreach (var node in nodes)
-                node.Play();
+                node.OnUpdate();
         }
 
-        public void Puse()
-        {
-            _isPlay = false;
-        }
 
         //  event handlers
         private void OnInputSocketClicked(SocketInput input, PointerEventData eventData)
