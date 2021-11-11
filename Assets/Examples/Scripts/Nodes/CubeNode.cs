@@ -53,17 +53,17 @@ namespace RuntimeNodeEditor
 
         private void OnConnectedValueUpdated()
         {
-            ValueUpdate(inputSocketTransform.socketId, resultTextPosition, resultTextRotation, resultTextScale);
+            ValueUpdate(inputSocketTransform.SocketID, resultTextPosition, resultTextRotation, resultTextScale);
         }
 
         private void ValueUpdate(string id, TMP_Text posText, TMP_Text rotText, TMP_Text scaleText)
         {
-            if (connectedOutputs.ContainsKey(id)
-                && connectedOutputs[id].Count != 0)
+            if (_ConnectedOutputs.ContainsKey(id)
+                && _ConnectedOutputs[id].Count != 0)
             {
-                Model.transform.position = connectedOutputs[id][0].GetValue<TransformRuntimeData>().position;
-                Model.transform.localEulerAngles = connectedOutputs[id][0].GetValue<TransformRuntimeData>().rotation;
-                Model.transform.localScale = connectedOutputs[id][0].GetValue<TransformRuntimeData>().scale;
+                Model.transform.position = _ConnectedOutputs[id][0].GetValue<TransformRuntimeData>().position;
+                Model.transform.localEulerAngles = _ConnectedOutputs[id][0].GetValue<TransformRuntimeData>().rotation;
+                Model.transform.localScale = _ConnectedOutputs[id][0].GetValue<TransformRuntimeData>().scale;
             }
             Display(posText, Model.transform.position.ToString());
             Display(rotText, Model.transform.localEulerAngles.ToString());

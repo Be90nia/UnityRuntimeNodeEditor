@@ -2,27 +2,59 @@ using System.Collections;
 using System.Collections.Generic;
 using RuntimeNodeEditor;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 
 public class Example : MonoBehaviour
 {
-    private RuntimeNodeEditor.ContextMenu _contextMenu;
-    private ContextMenuData _graphCtx;
-    // Start is called before the first frame update
+    public NodeEditor NodeEditor;
+    private ContextMenuData m_GraphMenuData;
+    public List<NodeCreateData> CreateDatas;
+    public string FeildPath = "/NodeSystem/Resources/Graphs/graph.json";
+
     void Start()
     {
-        _contextMenu = Utility.CreatePrefab<RuntimeNodeEditor.ContextMenu>("Prefabs/ContextMenu", contextMenuContainer);
-        _contextMenu.Init();
-        CloseContextMenu();
+        FeildPath = Application.dataPath + FeildPath;
+        NodeEditor.SaveFilePath(FeildPath);
+        GraphPointerListener.GraphPointerClickEvent += OnGraphPointerClick;
     }
-
-
-
-    // Update is called once per frame
-    void Update()
+    //  event handlers
+    private void OnGraphPointerClick(PointerEventData eventData)
     {
-        
+        switch (eventData.button)
+        {
+            case PointerEventData.InputButton.Right:
+                DisplayGraphContextMenu();
+                break;
+            case PointerEventData.InputButton.Left:
+                NodeEditor.CloseContextMenu();
+                break;
+        }
+    }
+    private void DisplayGraphContextMenu()
+    {
+        var contextMenuBuilder = new ContextMenuBuilder();
+        foreach (var data in CreateDatas)
+            contextMenuBuilder.Add(data.NodeMenuName,
+                () => { NodeEditor.CreateNode(data.NodePrefabsPath); });
+
+        m_GraphMenuData = contextMenuBuilder
+            .Add("graph/load", LoadGraph)
+            .Add("graph/save", SaveGraph)
+            .Build();
+
+        NodeEditor.ShowMenu(m_GraphMenuData);
     }
 
 
+
+    public void SaveGraph()
+    {
+        NodeEditor.SaveGraph();
+    }
+
+    public void LoadGraph()
+    {
+        NodeEditor.LoadGraph();
+    }
 }

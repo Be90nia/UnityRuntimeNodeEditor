@@ -46,11 +46,11 @@ namespace RuntimeNodeEditor
 
         private void OnConnectedValueUpdated()
         {
-            if (connectedOutputs.ContainsKey(inputSocket.socketId)
-                && connectedOutputs[inputSocket.socketId].Count != 0)
+            if (_ConnectedOutputs.ContainsKey(inputSocket.SocketID)
+                && _ConnectedOutputs[inputSocket.SocketID].Count != 0)
             {
                 _timers.Clear();
-                foreach (var output in connectedOutputs[inputSocket.socketId])
+                foreach (var output in _ConnectedOutputs[inputSocket.SocketID])
                 {
                     _timers.Add(output.GetValue<ITimer>());
                 }
@@ -65,7 +65,7 @@ namespace RuntimeNodeEditor
         }
 
 
-        public override void Play()
+        public void Play()
         {
             _timer = Timer.Register(_duration);
             foreach (var timer in _timers)

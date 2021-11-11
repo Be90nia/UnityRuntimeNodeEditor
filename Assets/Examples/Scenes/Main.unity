@@ -636,6 +636,7 @@ GameObject:
   - component: {fileID: 858801330}
   - component: {fileID: 858801329}
   - component: {fileID: 858801328}
+  - component: {fileID: 858801332}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -692,7 +693,7 @@ Canvas:
   m_GameObject: {fileID: 858801327}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_Camera: {fileID: 308718491}
   m_PlaneDistance: 100
   m_PixelPerfect: 1
@@ -724,55 +725,35 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!1 &895255848
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 895255849}
-  - component: {fileID: 895255850}
-  m_Layer: 0
-  m_Name: NodeEditor
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &895255849
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 895255848}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &895255850
+--- !u!114 &858801332
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 895255848}
+  m_GameObject: {fileID: 858801327}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce51df8af83f84514887f184cd516f9c, type: 3}
+  m_Script: {fileID: 11500000, guid: 1900f531445eed64ba659217ef7b54b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minZoom: 0.6
-  maxZoom: 3
-  graph: {fileID: 1763663739}
-  pointerListener: {fileID: 500613475}
-  contextMenuContainer: {fileID: 1372047626}
-  nodeContainer: {fileID: 1117861406}
+  NodeEditor: {fileID: 2135844017}
+  CreateDatas:
+  - NodeMenuName: nodes/int
+    NodePrefabsPath: Prefabs/Nodes/IntNode
+  - NodeMenuName: nodes/float
+    NodePrefabsPath: Prefabs/Nodes/FloatNode
+  - NodeMenuName: nodes/vector3
+    NodePrefabsPath: Prefabs/Nodes/Vector3Node
+  - NodeMenuName: nodes/transform
+    NodePrefabsPath: Prefabs/Nodes/TransformNode
+  - NodeMenuName: nodes/math op
+    NodePrefabsPath: Prefabs/Nodes/MathOperationNode
+  - NodeMenuName: nodes/timer
+    NodePrefabsPath: Prefabs/Nodes/TimerNode
+  - NodeMenuName: models/cube
+    NodePrefabsPath: Prefabs/Nodes/CubeNode
+  FeildPath: /NodeSystem/Resources/Graphs/graph.json
 --- !u!1 &1117861405
 GameObject:
   m_ObjectHideFlags: 0
@@ -965,9 +946,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d933f4b77fa4c45e39f9c5dffb9a55df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointerLocator: {fileID: 1483321592}
-  lineContainer: {fileID: 1195190855}
-  vertexCount: 60
+  PointerLocator: {fileID: 1483321592}
+  LineContainer: {fileID: 1195190855}
+  VertexCount: 10
 --- !u!114 &1763663739
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -980,13 +961,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05e43f448074346f5b2821f1cefbca3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nodes:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  drawer: {fileID: 1763663738}
+  m_BezierCurveDrawer: {fileID: 1763663738}
 --- !u!1 &2135844012
 GameObject:
   m_ObjectHideFlags: 0
@@ -999,6 +974,7 @@ GameObject:
   - component: {fileID: 2135844016}
   - component: {fileID: 2135844015}
   - component: {fileID: 2135844014}
+  - component: {fileID: 2135844017}
   m_Layer: 5
   m_Name: NodeEditor
   m_TagString: Untagged
@@ -1080,3 +1056,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2135844012}
   m_CullTransparentMesh: 0
+--- !u!114 &2135844017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2135844012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce51df8af83f84514887f184cd516f9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _MinZoom: 0.5
+  _MaxZoom: 3
+  _Graph: {fileID: 1763663739}
+  _PointerListener: {fileID: 500613475}
+  _ContextMenuContainer: {fileID: 1372047626}
+  _NodeContainer: {fileID: 1117861406}
+  m_NodeCanvas: {fileID: 858801330}
+  m_SaveFilePath: 

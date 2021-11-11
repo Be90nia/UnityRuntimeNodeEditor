@@ -69,19 +69,19 @@ namespace RuntimeNodeEditor
 
         private void OnConnectedValueUpdated()
         {
-            ValueUpdate(inputSocketPosition.socketId, resultTextPosition,ref outputSocket.GetValue<TransformRuntimeData>().position);
-            ValueUpdate(inputSocketRotation.socketId, resultTextRotation,ref outputSocket.GetValue<TransformRuntimeData>().rotation);
-            ValueUpdate(inputSocketScale.socketId, resultTextScale,ref outputSocket.GetValue<TransformRuntimeData>().scale);
+            ValueUpdate(inputSocketPosition.SocketID, resultTextPosition,ref outputSocket.GetValue<TransformRuntimeData>().position);
+            ValueUpdate(inputSocketRotation.SocketID, resultTextRotation,ref outputSocket.GetValue<TransformRuntimeData>().rotation);
+            ValueUpdate(inputSocketScale.SocketID, resultTextScale,ref outputSocket.GetValue<TransformRuntimeData>().scale);
             outputSocket.SetValue(outputSocket.GetValue<TransformRuntimeData>());
         }
 
         private void ValueUpdate(string id, TMP_Text text,ref Vector3 value)
         {
-            if (connectedOutputs.ContainsKey(id)
-                && connectedOutputs[id].Count != 0)
+            if (_ConnectedOutputs.ContainsKey(id)
+                && _ConnectedOutputs[id].Count != 0)
             {
                 Vector3 temp = Vector3.zero;
-                foreach (var output in connectedOutputs[id])
+                foreach (var output in _ConnectedOutputs[id])
                 {
                     temp += output.GetValue<Vector3>();
                 }
